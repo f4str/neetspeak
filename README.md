@@ -1,1 +1,1 @@
-# NEETspeak
+# neetspeak
