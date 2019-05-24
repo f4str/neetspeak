@@ -5,11 +5,19 @@ import ast
 tokens = lexer.tokens
 
 precedence = (
+	('left', 'OR'),
+	('left', 'AND'),
+	('left', 'NOT'),
+	('left', 'EQ', 'LT', 'GT', 'LE', 'GE', 'NEQ'),
+	('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIV', 'MOD'), 
+    ('nonassoc', 'UMINUS', 'UPLUS'),
+    ('right', 'EXP'), 
 )
 
 def p_temp(p):
-    '''temp : statement_list'''
-    p[0] = ast.TempNode(p[1])
+	'''temp : statement_list'''
+	p[0] = ast.TempNode(p[1])
 
 # def p_program(p):
 #     '''program : MAIN block'''
@@ -28,27 +36,27 @@ def p_temp(p):
 #         p[0] = ast.BlockNode(p[2])
 
 def p_statement_list(p):
-    '''statement_list : statement_list statement
-                      | statement'''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    elif len(p) == 3:
-        p[0] = p[1] + [p[2]]
+	'''statement_list : statement_list statement
+					  | statement'''
+	if len(p) == 2:
+		p[0] = [p[1]]
+	elif len(p) == 3:
+		p[0] = p[1] + [p[2]]
 
 def p_statement(p):
-    '''statement : PRINT LPAREN expression RPAREN SEMICOLON'''
-    p[0] = ast.PrintNode(p[3])
+	'''statement : PRINT LPAREN expression RPAREN SEMI'''
+	p[0] = ast.PrintNode(p[3])
 
 def p_expression(p):
-    '''expression : INTEGER
-                  | DECIMAL
-                  | CHARACTER
-                  | STRING'''
-    p[0] = p[1]
+	'''expression : INT
+				  | REAL
+				  | BOOL
+				  | CHAR
+				  | STRING'''
+	p[0] = p[1]
 
 def p_error(p):
-    if not p:
-        print('syntax error')
+	print(f'syntax error at {p.value}')
 
 parser = yacc.yacc()
 
