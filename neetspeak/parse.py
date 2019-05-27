@@ -8,11 +8,11 @@ precedence = (
 	('left', 'OR'),
 	('left', 'AND'),
 	('left', 'NOT'),
-	('left', 'EQ', 'LT', 'GT', 'LE', 'GE', 'NEQ'),
+	('left', 'EQ', 'LT', 'GT', 'LE', 'GE', 'NE'),
 	('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIV', 'MOD'), 
     ('nonassoc', 'UMINUS', 'UPLUS'),
-    ('right', 'EXP'), 
+    ('right', 'POW'), 
 )
 
 def p_temp(p):
@@ -48,12 +48,40 @@ def p_statement(p):
 	p[0] = ast.PrintNode(p[3])
 
 def p_expression(p):
-	'''expression : INT
+	'''expression : LPAREN expression RPAREN
+				  | INT
 				  | REAL
 				  | BOOL
 				  | CHAR
 				  | STRING'''
-	p[0] = p[1]
+	if len(p) == 2:
+		p[0] = p[1]
+	elif len(p) == 4:
+		p[0] = p[2]
+
+def p_unary_operation(p):
+	'''expression : MINUS expression %prec UMINUS
+				  | PLUS expression %prec UPLUS
+				  | NOT expression %prec NOT'''
+	p[0] = ast.UnaryOperationNode(op = p[1], value = p[2])
+
+def p_binary_operation(p):
+	'''expression : expression PLUS expression
+				  | expression MINUS expression
+				  | expression TIMES expression
+				  | expression DIV expression
+				  | expression MOD expression
+				  | expression POW expression
+				  | expression EQ expression
+				  | expression NE expression
+				  | expression LT expression
+				  | expression GT expression
+				  | expression LE expression
+				  | expression GE expression
+				  | expression AND expression
+				  | expression OR expression
+				  | expression XOR expression'''
+	p[0] = ast.BinaryOperationNode(op = p[2], v1 = p[1], v2 = p[3])
 
 def p_error(p):
 	print(f'syntax error at {p.value}')

@@ -1,4 +1,4 @@
-import types
+import datatypes as types
 
 class Node:
 	def __init__(self):
@@ -56,34 +56,27 @@ class PrintNode(Node):
 		self.value = value
 	
 	def execute(self):
-		if isinstance(self.value, CharacterNode):
-			value = "'" + self.value.evaluate() + "'"
-		elif isinstance(self.value, StringNode):
-			value = '"' + self.value.evaluate() + '"'
-		elif isinstance(self.value, BooleanNode):
-			value = 'true' if self.value.evaluate() else 'false'
-		else:
-			value = self.value.evaluate()
-		print(value)
+		print(self.value.evaluate())
 
 
-class UopNode(Node):
+class UnaryOperationNode(Node):
 	def __init__(self, op, value):
 		self.op = op
 		self.value = value
 	
 	def evaluate(self):
 		val = self.value.evaluate()
-		if self.op == 'not'
-			return not val.value
+		if self.op == 'not':
+			return val.not_op()
 		elif self.op == '-':
-			return -val
+			return val.neg_op()
 		elif self.op == '+':
-			return +val
+			return val.pos_op()
 		else:
 			raise SyntaxError
 
-class BinopNode(Node):
+
+class BinaryOperationNode(Node):
 	def __init__(self, op, v1, v2):
 		self.op = op
 		self.v1 = v1
@@ -93,35 +86,36 @@ class BinopNode(Node):
 		val1 = self.v1.evaluate()
 		val2 = self.v2.evaluate()
 		if self.op == '+':
-			return val1 + val2
+			return val1.add_op(val2)
 		elif self.op == '-':
-			return val1 - val2
+			return val1.sub_op(val2)
 		elif self.op == '*':
-			return val1 * val2
+			return val1.mul_op(val2)
 		elif self.op == '/':
-			return val1 / val2
+			return val1.div_op(val2)
 		elif self.op == '%':
-			return val1 & val2
+			return val1.mod_op(val2)
 		elif self.op == '**':
-			return val1 ** val2
+			return val1.pow_op(val2)
 		elif self.op == 'and':
-			return val1.value and val2.value
+			return val1.and_op(val2)
 		elif self.op == 'or':
-			return val1.value or val2.value
+			return val1.or_op(val2)
 		elif self.op in {'xor', '!='}:
-			return val1 != val2
+			return val1.ne_op(val2)
 		elif self.op == '==':
-			return val1 == val2
+			return val1.eq_op(val2)
 		elif self.op == '<':
-			return val1 < val2
+			return val1.lt_op(val2)
 		elif self.op == '>':
-			return val1 > val2
+			return val1.gt_op(val2)
 		elif self.op == '<=':
-			return val1 <= val2
+			return val1.le_op(val2)
 		elif self.op == '>=':
-			return val1 >= val2
+			return val1.ge_op(val2)
 		else:
 			raise SyntaxError
+
 
 class TempNode(Node):
 	def __init__(self, sl):
@@ -130,6 +124,7 @@ class TempNode(Node):
 	def execute(self):
 		for s in self.sl:
 			s.execute()
+
 
 class BlockNode(Node):
 	def __init__(self, sl = None):

@@ -35,11 +35,10 @@ keywords = (
 
 tokens = keywords + (
 	'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 
-	'PLUS', 'MINUS', 'TIMES', 'DIV', 'MOD', 'EXP', 
-	'EQ', 'LT', 'LE', 'GT', 'GE', 'NEQ', 
+	'PLUS', 'MINUS', 'TIMES', 'DIV', 'MOD', 'POW', 
+	'EQ', 'LT', 'LE', 'GT', 'GE', 'NE', 
 	'SEMI', 
-	'REAL', 'INT', 'BOOL', 'CHAR', 
-	'STRING', 
+	'REAL', 'INT', 'BOOL', 'CHAR', 'STRING', 
 )
 
 t_LPAREN = r'\('
@@ -52,13 +51,13 @@ t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIV = r'/'
 t_MOD = r'%'
-t_EXP = r'\*\*'
+t_POW = r'\*\*'
 t_EQ = r'=='
 t_LT = r'<'
 t_GT = r'>'
 t_LE = r'<='
 t_GE = r'>='
-t_NEQ = r'!='
+t_NE = r'!='
 t_NOT = r'not'
 t_AND = r'and'
 t_OR = r'or'
