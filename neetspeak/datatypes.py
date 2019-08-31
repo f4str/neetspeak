@@ -343,6 +343,8 @@ class String(Object):
 	def add_op(self, other):
 		if isinstance(other, String):
 			return String(self.value + other.value)
+		elif isinstance(other, Char):
+			return String(self.value + chr(other.value))
 		else:
 			raise SyntaxError
 	

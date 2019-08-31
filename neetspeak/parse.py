@@ -10,9 +10,9 @@ precedence = (
 	('left', 'NOT'),
 	('left', 'EQ', 'LT', 'GT', 'LE', 'GE', 'NE'),
 	('left', 'PLUS', 'MINUS'),
-    ('left', 'TIMES', 'DIV', 'MOD'), 
-    ('nonassoc', 'UMINUS', 'UPLUS'),
-    ('right', 'POW'), 
+	('left', 'TIMES', 'DIV', 'MOD'), 
+	('nonassoc', 'UMINUS', 'UPLUS'),
+	('right', 'POW'), 
 )
 
 def p_temp(p):
@@ -85,6 +85,7 @@ def p_binary_operation(p):
 
 def p_error(p):
 	print(f'syntax error at {p.value}')
+	raise SyntaxError
 
 parser = yacc.yacc()
 

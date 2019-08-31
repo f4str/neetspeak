@@ -94,6 +94,6 @@ t_ignore = ' \t\r\n'
 
 def t_error(t):
 	print(f'Illegal character {t.value[0]}')
-	t.lexer.skip(1)
+	raise SyntaxError
 
 lex.lex()

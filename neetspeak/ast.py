@@ -5,7 +5,7 @@ class Node:
 		pass
 	
 	def evaluate(self):
-		pass
+		self.execute()
 		
 	def execute(self):
 		self.evaluate()
