@@ -390,3 +390,77 @@ class String(Object):
 		else:
 			raise SyntaxError
 
+
+class List(Object):
+	def __init__(self, value):
+		self.value = value
+	
+	def __str__(self):
+		return str(self.value)
+	
+	def __len__(self):
+		return len(self.value)
+	
+	def __getitem__(self, key):
+		return self.value[key]
+	
+	def __setitem__(self, key, value):
+		self.value[key] = value
+	
+	def add_op(self, other):
+		if isinstance(other, List):
+			return List(self.value + other.value)
+		else:
+			raise SyntaxError
+	
+	def mul_op(self, other):
+		if isinstance(other, Int):
+			return List(self.value * other.value)
+		else:
+			raise SyntaxError
+	
+	def lt_op(self, other):
+		if isinstance(other, List):
+			return Bool(self.value < other.value)
+		else:
+			raise SyntaxError
+	
+	def gt_op(self, other):
+		if isinstance(other, List):
+			return Bool(self.value > other.value)
+		else:
+			raise SyntaxError
+	
+	def le_op(self, other):
+		if isinstance(other, List):
+			return Bool(self.value <= other.value)
+		else:
+			raise SyntaxError
+	
+	def ge_op(self, other):
+		if isinstance(other, List):
+			return Bool(self.value >= other.value)
+		else:
+			raise SyntaxError
+	
+	def eq_op(self, other):
+		if isinstance(other, List):
+			return Bool(self.value == other.value)
+		else:
+			raise SyntaxError
+	
+	def ne_op(self, other):
+		if isinstance(other, List):
+			return Bool(self.value != other.value)
+		else:
+			raise SyntaxError
+	
+	def append(self, other):
+		return List(self.value.append(other))
+	
+	def index(self, i):
+		if isinstance(i, Int):
+			return self.value[i]
+		else:
+			raise SyntaxError
+

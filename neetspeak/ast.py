@@ -51,6 +51,23 @@ class StringNode(Node):
 		return self.value
 
 
+class ListNode(Node):
+	def __init__(self, value = []):
+		self.value = types.List(value)
+	
+	def append(self, v):
+		self.value.append(v)
+	
+	def index(self, i):
+		n = i.evaluate()
+		return self.value.index(n)
+	
+	def evaluate(self):
+		for i in range(len(self.value)):
+			self.value[i] = self.value[i].evaluate()
+		return self.value
+
+
 class PrintNode(Node):
 	def __init__(self, value):
 		self.value = value
@@ -117,15 +134,6 @@ class BinaryOperationNode(Node):
 			raise SyntaxError
 
 
-class TempNode(Node):
-	def __init__(self, sl):
-		self.sl = sl
-	
-	def execute(self):
-		for s in self.sl:
-			s.execute()
-
-
 class BlockNode(Node):
 	def __init__(self, sl = None):
 		self.sl = sl
@@ -140,6 +148,6 @@ class ProgramNode(Node):
 	def __init__(self, block):
 		self.block = block
 	
-	def __init__(self):
+	def execute(self):
 		self.block.execute()
 

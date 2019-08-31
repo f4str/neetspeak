@@ -15,25 +15,17 @@ precedence = (
 	('right', 'POW'), 
 )
 
-def p_temp(p):
-	'''temp : statement_list'''
-	p[0] = ast.TempNode(p[1])
+def p_program(p):
+	'''program : MAIN block'''
+	p[0] = ast.ProgramNode(block = p[2])
 
-# def p_program(p):
-#     '''program : MAIN block'''
-#     print(p[0])
-#     print(p[1])
-#     print(p[2])
-#     p[0] = ast.ProgramNode(p[2])
-
-# def p_block(p):
-#     '''block : LBRACE statement_list RBRACE
-#              | LBRACE RBRACE'''
-#     if len(p) == 3:
-#         p[0] = ast.BlockNode()
-#     elif len(p) == 4:
-#         print(p[2])
-#         p[0] = ast.BlockNode(p[2])
+def p_block(p):
+	'''block : LBRACE statement_list RBRACE
+			 | LBRACE RBRACE'''
+	if len(p) == 3:
+		p[0] = ast.BlockNode()
+	elif len(p) == 4:
+		p[0] = ast.BlockNode(sl = p[2])
 
 def p_statement_list(p):
 	'''statement_list : statement_list statement
@@ -53,7 +45,8 @@ def p_expression(p):
 				  | REAL
 				  | BOOL
 				  | CHAR
-				  | STRING'''
+				  | STRING
+				  | list'''
 	if len(p) == 2:
 		p[0] = p[1]
 	elif len(p) == 4:
@@ -82,6 +75,22 @@ def p_binary_operation(p):
 				  | expression OR expression
 				  | expression XOR expression'''
 	p[0] = ast.BinaryOperationNode(op = p[2], v1 = p[1], v2 = p[3])
+
+def p_list(p):
+	'''list : LBRACKET list_in RBRACKET
+			| LBRACKET RBRACKET'''
+	if len(p) == 3:
+		p[0] = ast.ListNode()
+	elif len(p) == 4:
+		p[0] = ast.ListNode(value = p[2])
+
+def p_list_in(p):
+	'''list_in : list_in COMMA expression
+			   | expression'''
+	if len(p) == 2:
+		p[0] = [p[1]]
+	elif len(p) == 4:
+		p[0] = p[1] + [p[3]]
 
 def p_error(p):
 	print(f'syntax error at {p.value}')

@@ -16,9 +16,6 @@ import ast
 #     'ID'
 # )
 
-# t_LBRACKET = r'\['
-# t_RBRACKET = r'\]'
-# t_COMMA = r','
 # t_COLON = r':'
 # t_IN = r'in'
 # t_ASSIGN = r'='
@@ -34,18 +31,21 @@ keywords = (
 )
 
 tokens = keywords + (
-	'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 
+	'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET', 
 	'PLUS', 'MINUS', 'TIMES', 'DIV', 'MOD', 'POW', 
 	'EQ', 'LT', 'LE', 'GT', 'GE', 'NE', 
-	'SEMI', 
-	'REAL', 'INT', 'BOOL', 'CHAR', 'STRING', 
+	'SEMI', 'COMMA', 
+	'INT', 'REAL', 'BOOL', 'CHAR', 'STRING', 
 )
 
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACE = r'\{'
 t_RBRACE = r'\}'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
 t_SEMI = r';'
+t_COMMA = r','
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
