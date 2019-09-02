@@ -47,6 +47,10 @@ class StringNode(Node):
 	def __init__(self, value):
 		self.value = types.String(value[1:-1])
 	
+	def index(self, i):
+		n = i.evaluate()
+		return CharNode(str(self.value.index(n)))
+	
 	def evaluate(self):
 		return self.value
 

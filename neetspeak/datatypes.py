@@ -389,6 +389,12 @@ class String(Object):
 			return Bool(self.value != other.value)
 		else:
 			raise SyntaxError
+	
+	def index(self, i):
+		if isinstance(i, Int):
+			return Char(self.value[i.value])
+		else:
+			raise SyntaxError
 
 
 class List(Object):
@@ -460,7 +466,7 @@ class List(Object):
 	
 	def index(self, i):
 		if isinstance(i, Int):
-			return self.value[i]
+			return self.value[i.value]
 		else:
 			raise SyntaxError
 

@@ -13,6 +13,10 @@ precedence = (
 	('left', 'TIMES', 'DIV', 'MOD'), 
 	('nonassoc', 'UMINUS', 'UPLUS'),
 	('right', 'POW'), 
+	('left', 'INDEX'),
+	('left', 'LBRACKET'),
+	('left', 'LPAREN'),
+	('left', 'LBRACE')
 )
 
 def p_program(p):
@@ -75,6 +79,13 @@ def p_binary_operation(p):
 				  | expression OR expression
 				  | expression XOR expression'''
 	p[0] = ast.BinaryOperationNode(op = p[2], v1 = p[1], v2 = p[3])
+
+def p_index(p):
+	'''expression : expression LBRACKET expression RBRACKET %prec INDEX'''
+	if isinstance(p[1], (ast.StringNode, ast.ListNode)):
+		p[0] = p[1].index(p[3])
+	else:
+		raise SyntaxError
 
 def p_list(p):
 	'''list : LBRACKET list_in RBRACKET
