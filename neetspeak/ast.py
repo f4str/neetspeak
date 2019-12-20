@@ -1,4 +1,8 @@
 import datatypes as types
+import lexer
+
+stack = []
+functions = {}
 
 class Node:
 	def __init__(self):
@@ -146,6 +150,31 @@ class BlockNode(Node):
 		if self.sl:
 			for s in self.sl:
 				s.execute()
+
+
+class VariableNode(Node):
+	def __init__(self, value):
+		if value in lexer.tokens:
+			raise SyntaxError
+		self.value = value
+	
+	def evaluate(self):
+		if self.value in stack[-1]:
+			return stack[-1][self.value]
+		else:
+			for variables in stack:
+				if self.value in variables:
+					return variables[self.value]
+		raise KeyError
+
+
+class AssignmentNode(Node):
+	def __init__(self, var, value):
+		self.var = var
+		self.value = value
+	
+	def evaluate(self):
+		stack[-1][self.var.value] = self.value.evaluate()
 
 
 class ProgramNode(Node):

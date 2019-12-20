@@ -469,4 +469,3 @@ class List(Object):
 			return self.value[i.value]
 		else:
 			raise SyntaxError
-

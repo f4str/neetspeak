@@ -18,7 +18,6 @@ import ast
 
 # t_COLON = r':'
 # t_IN = r'in'
-# t_ASSIGN = r'='
 # t_IF = r'if'
 # t_ELSE = r'else'
 # t_WHILE = r'while'
@@ -27,14 +26,15 @@ import ast
 
 keywords = (
 	'AND', 'OR', 'XOR', 'NOT', 
-	'PRINT', 'MAIN'
+	'PRINT', 'MAIN', 
+	'INT_V', 'REAL_V', 'BOOL_V', 'CHAR_V', 'STRING_V', 'LIST_V'
 )
 
 tokens = keywords + (
 	'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET', 
 	'PLUS', 'MINUS', 'TIMES', 'DIV', 'MOD', 'POW', 
 	'EQ', 'LT', 'LE', 'GT', 'GE', 'NE', 
-	'SEMI', 'COMMA', 
+	'SEMI', 'COMMA', 'ASSIGN',
 	'INT', 'REAL', 'BOOL', 'CHAR', 'STRING', 
 )
 
@@ -47,6 +47,7 @@ t_RBRACKET = r'\]'
 t_SEMI = r';'
 t_COMMA = r','
 t_PLUS = r'\+'
+t_ASSIGN = r'='
 t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIV = r'/'
@@ -64,6 +65,13 @@ t_OR = r'or'
 t_XOR = r'xor'
 t_PRINT = r'print'
 t_MAIN = r'main'
+
+t_INT_V = r'int'
+t_REAL_V = r'real'
+t_BOOL_V = r'bool'
+t_CHAR_V = r'char'
+t_STRING_V = r'string'
+t_LIST_V = r'list'
 
 def t_REAL(t):
 	r'\d*(\d\.|\.\d)\d*([eE][-+]?\d+)?'
