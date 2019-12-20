@@ -26,8 +26,7 @@ import ast
 
 keywords = (
 	'AND', 'OR', 'XOR', 'NOT', 
-	'PRINT', 'MAIN', 
-	'INT_V', 'REAL_V', 'BOOL_V', 'CHAR_V', 'STRING_V', 'LIST_V'
+	'END', 'PRINT', 'MAIN'
 )
 
 tokens = keywords + (
@@ -35,7 +34,7 @@ tokens = keywords + (
 	'PLUS', 'MINUS', 'TIMES', 'DIV', 'MOD', 'POW', 
 	'EQ', 'LT', 'LE', 'GT', 'GE', 'NE', 
 	'SEMI', 'COMMA', 'ASSIGN',
-	'INT', 'REAL', 'BOOL', 'CHAR', 'STRING', 
+	'INT', 'REAL', 'BOOL', 'STRING', 
 )
 
 t_LPAREN = r'\('
@@ -47,13 +46,13 @@ t_RBRACKET = r'\]'
 t_SEMI = r';'
 t_COMMA = r','
 t_PLUS = r'\+'
-t_ASSIGN = r'='
+t_ASSIGN = r':='
 t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIV = r'/'
 t_MOD = r'%'
 t_POW = r'\*\*'
-t_EQ = r'=='
+t_EQ = r'='
 t_LT = r'<'
 t_GT = r'>'
 t_LE = r'<='
@@ -63,15 +62,9 @@ t_NOT = r'not'
 t_AND = r'and'
 t_OR = r'or'
 t_XOR = r'xor'
+t_END = r'end'
 t_PRINT = r'print'
 t_MAIN = r'main'
-
-t_INT_V = r'int'
-t_REAL_V = r'real'
-t_BOOL_V = r'bool'
-t_CHAR_V = r'char'
-t_STRING_V = r'string'
-t_LIST_V = r'list'
 
 def t_REAL(t):
 	r'\d*(\d\.|\.\d)\d*([eE][-+]?\d+)?'
@@ -88,20 +81,14 @@ def t_BOOL(t):
 	t.value = ast.BoolNode(t.value)
 	return t
 
-def t_CHAR(t):
-	r'\'[^\'\\]\' | \'\\\'\''
-	t.value = ast.CharNode(t.value)
-	return t
-
 def t_STRING(t):
-	r'"(?:[^"\\]+|\\.)*"'
+	r'"(?:[^"\\]+|\\.)*" | \'(?:[^\'\\]+|\\.)*\''
 	t.value = ast.StringNode(t.value)
 	return t
 
 t_ignore = ' \t\r\n'
 
 def t_error(t):
-	print(f'Illegal character {t.value[0]}')
-	raise SyntaxError
+	raise error.SyntaxError(f'invalid character {t.value[0]}')
 
 lex.lex()

@@ -39,21 +39,13 @@ class BoolNode(Node):
 		return self.value
 
 
-class CharNode(Node):
-	def __init__(self, value):
-		self.value = types.Char(value[1:-1])
-	
-	def evaluate(self):
-		return self.value
-
-
 class StringNode(Node):
 	def __init__(self, value):
 		self.value = types.String(value[1:-1])
 	
 	def index(self, i):
 		n = i.evaluate()
-		return CharNode(str(self.value.index(n)))
+		return StringNode('"' + self.value.index(n).value + '"')
 	
 	def evaluate(self):
 		return self.value

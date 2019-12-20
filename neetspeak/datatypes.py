@@ -104,8 +104,6 @@ class Int(Object):
 			return Int(self.value + other.value)
 		elif isinstance(other, Real):
 			return Real(self.value + other.value)
-		elif isinstance(other, (Int, Char)):
-			return Char(chr(self.value + other.value))
 		else:
 			raise SyntaxError
 	
@@ -114,8 +112,6 @@ class Int(Object):
 			return Int(self.value - other.value)
 		elif isinstance(other, Real):
 			return Real(self.value - other.value)
-		elif isinstance(other, (Int, Char)):
-			return Char(chr(self.value - other.value))
 		else:
 			raise SyntaxError
 	
@@ -276,62 +272,6 @@ class Real(Object):
 	def pos_op(self):
 		return Real(+self.value)
 
-
-class Char(Object):
-	def __init__(self, value):
-		self.value = ord(value)
-	
-	def __str__(self):
-		return "'" + chr(self.value) + "'"
-	
-	def add_op(self, other):
-		if isinstance(other, (Int, Char)):
-			return Char(chr(self.value + other.value))
-		else:
-			raise SyntaxError
-	
-	def sub_op(self, other):
-		if isinstance(other, (Int, Real)):
-			return Char(chr(self.value - other.value))
-		else:
-			raise SyntaxError
-	
-	def lt_op(self, other):
-		if isinstance(other, (Int, Char)):
-			return Bool(self.value < other.value)
-		else:
-			raise SyntaxError
-	
-	def gt_op(self, other):
-		if isinstance(other, (Int, Char)):
-			return Bool(self.value > other.value)
-		else:
-			raise SyntaxError
-	
-	def le_op(self, other):
-		if isinstance(other, (Int, Char)):
-			return Bool(self.value <= other.value)
-		else:
-			raise SyntaxError
-	
-	def ge_op(self, other):
-		if isinstance(other, (Int, Char)):
-			return Bool(self.value >= other.value)
-		else:
-			raise SyntaxError
-	
-	def eq_op(self, other):
-		if isinstance(other, (Int, Char)):
-			return Bool(self.value == other.value)
-		else:
-			raise SyntaxError
-	
-	def ne_op(self, other):
-		if isinstance(other, (Int, Char)):
-			return Bool(self.value != other.value)
-		else:
-			raise SyntaxError
-
 	
 class String(Object):
 	def __init__(self, value):
@@ -343,8 +283,8 @@ class String(Object):
 	def add_op(self, other):
 		if isinstance(other, String):
 			return String(self.value + other.value)
-		elif isinstance(other, Char):
-			return String(self.value + chr(other.value))
+		elif isinstance(other, (Int, Real)):
+			return String(self.value + str(other.value))
 		else:
 			raise SyntaxError
 	
@@ -392,7 +332,10 @@ class String(Object):
 	
 	def index(self, i):
 		if isinstance(i, Int):
-			return Char(self.value[i.value])
+			if i.value > 0:
+				return String(self.value[i.value - 1])
+			else:
+				raise SyntaxError
 		else:
 			raise SyntaxError
 
@@ -466,6 +409,9 @@ class List(Object):
 	
 	def index(self, i):
 		if isinstance(i, Int):
-			return self.value[i.value]
+			if i.value > 0:
+				return self.value[i.value - 1]
+			else:
+				raise SyntaxError
 		else:
 			raise SyntaxError

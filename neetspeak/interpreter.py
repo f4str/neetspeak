@@ -7,6 +7,9 @@ if len(sys.argv) != 2:
 
 with open(sys.argv[1]) as fd:
 	data = fd.read()
-program = parser.parse(data)
-program.execute()
 
+try:
+	program = parser.parse(data)
+	program.execute()
+except SyntaxError:
+	print('syntax error')

@@ -24,12 +24,11 @@ def p_program(p):
 	p[0] = ast.ProgramNode(block = p[2])
 
 def p_block(p):
-	'''block : LBRACE statement_list RBRACE
-			 | LBRACE RBRACE'''
-	if len(p) == 3:
-		p[0] = ast.BlockNode()
-	elif len(p) == 4:
-		p[0] = ast.BlockNode(sl = p[2])
+	'''block : statement_list END'''
+	# if len(p) == 3:
+	# 	p[0] = ast.BlockNode()
+	# elif len(p) == 4:
+	p[0] = ast.BlockNode(sl = p[1])
 
 def p_statement_list(p):
 	'''statement_list : statement_list statement
@@ -40,7 +39,7 @@ def p_statement_list(p):
 		p[0] = p[1] + [p[2]]
 
 def p_statement(p):
-	'''statement : PRINT LPAREN expression RPAREN SEMI'''
+	'''statement : PRINT LPAREN expression RPAREN'''
 	p[0] = ast.PrintNode(p[3])
 
 def p_expression(p):
@@ -48,7 +47,6 @@ def p_expression(p):
 				  | INT
 				  | REAL
 				  | BOOL
-				  | CHAR
 				  | STRING
 				  | list'''
 	if len(p) == 2:
@@ -107,8 +105,8 @@ def p_error(p):
 	print(f'syntax error at {p.value}')
 	raise SyntaxError
 
-parser = yacc.yacc()
 
+parser = yacc.yacc()
 
 def parse(data, debug = 0):
 	parser.error = 0
