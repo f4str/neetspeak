@@ -33,9 +33,25 @@ tokens = keywords + (
 	'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET', 
 	'PLUS', 'MINUS', 'TIMES', 'DIV', 'MOD', 'POW', 
 	'EQ', 'LT', 'LE', 'GT', 'GE', 'NE', 
-	'SEMI', 'COMMA', 'ASSIGN',
+	'COMMA', 'ASSIGN', 'VARIABLE', 
 	'INT', 'REAL', 'BOOL', 'STRING', 
 )
+
+reserved = {
+	'if': 'IF',
+	'else': 'ELSE',
+	'while': 'WHILE',
+	'in': 'IN',
+	'end': 'END',
+	'print': 'PRINT',
+	'main': 'MAIN',
+	'not': 'NOT',
+	'and': 'AND',
+	'ore': 'OR',
+	'xor': 'XOR',
+	'true': 'TRUE',
+	'false': 'FALSE', 
+}
 
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -43,7 +59,6 @@ t_LBRACE = r'\{'
 t_RBRACE = r'\}'
 t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
-t_SEMI = r';'
 t_COMMA = r','
 t_PLUS = r'\+'
 t_ASSIGN = r':='
@@ -86,9 +101,15 @@ def t_STRING(t):
 	t.value = ast.StringNode(t.value)
 	return t
 
+def t_VARIABLE(t):
+	r'[A-Za-z][A-Za-z0-9_]*'
+	t.type = reserved.get(t.value, 'VARIABLE')
+	return t
+
 t_ignore = ' \t\r\n'
 
 def t_error(t):
-	raise error.SyntaxError(f'invalid character {t.value[0]}')
+	print(f'invalid character {t.value[0]}')
+	raise SyntaxError
 
 lex.lex()

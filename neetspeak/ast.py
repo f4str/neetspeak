@@ -174,5 +174,6 @@ class ProgramNode(Node):
 		self.block = block
 	
 	def execute(self):
+		stack.append({})
 		self.block.execute()
 

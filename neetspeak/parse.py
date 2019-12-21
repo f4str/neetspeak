@@ -5,6 +5,7 @@ import ast
 tokens = lexer.tokens
 
 precedence = (
+	('left', 'ASSIGN'),
 	('left', 'OR'),
 	('left', 'AND'),
 	('left', 'NOT'),
@@ -25,9 +26,6 @@ def p_program(p):
 
 def p_block(p):
 	'''block : statement_list END'''
-	# if len(p) == 3:
-	# 	p[0] = ast.BlockNode()
-	# elif len(p) == 4:
 	p[0] = ast.BlockNode(sl = p[1])
 
 def p_statement_list(p):
@@ -39,8 +37,12 @@ def p_statement_list(p):
 		p[0] = p[1] + [p[2]]
 
 def p_statement(p):
-	'''statement : PRINT LPAREN expression RPAREN'''
-	p[0] = ast.PrintNode(p[3])
+	'''statement : PRINT LPAREN expression RPAREN
+				  | expression ASSIGN expression'''
+	if len(p) == 4:
+		p[0] = ast.AssignmentNode(var = p[1], value = p[3])
+	elif len(p) == 5:
+		p[0] = ast.PrintNode(p[3])
 
 def p_expression(p):
 	'''expression : LPAREN expression RPAREN
@@ -53,6 +55,10 @@ def p_expression(p):
 		p[0] = p[1]
 	elif len(p) == 4:
 		p[0] = p[2]
+
+def p_variable(p):
+	'''expression : VARIABLE'''
+	p[0] = ast.VariableNode(p[1])
 
 def p_unary_operation(p):
 	'''expression : MINUS expression %prec UMINUS
