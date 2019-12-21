@@ -120,7 +120,7 @@ class BinaryOperationNode(Node):
 			return val1.or_op(val2)
 		elif self.op in {'xor', '!='}:
 			return val1.ne_op(val2)
-		elif self.op == '==':
+		elif self.op == '=':
 			return val1.eq_op(val2)
 		elif self.op == '<':
 			return val1.lt_op(val2)
@@ -142,6 +142,15 @@ class BlockNode(Node):
 		if self.sl:
 			for s in self.sl:
 				s.execute()
+
+
+class ProgramNode(Node):
+	def __init__(self, block):
+		self.block = block
+	
+	def execute(self):
+		stack.append({})
+		self.block.execute()
 
 
 class VariableNode(Node):
@@ -169,11 +178,14 @@ class AssignmentNode(Node):
 		stack[-1][self.var.value] = self.value.evaluate()
 
 
-class ProgramNode(Node):
-	def __init__(self, block):
-		self.block = block
+class IfNode(Node):
+	def __init__(self, expression, block1, block2 = None):
+		self.expression = expression
+		self.block1 = block1
+		self.block2 = block2
 	
-	def execute(self):
-		stack.append({})
-		self.block.execute()
-
+	def evaluate(self):
+		if self.expression.evaluate().value:
+			self.block1.execute()
+		elif self.block2:
+			self.block2.execute()

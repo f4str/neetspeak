@@ -11,5 +11,5 @@ with open(sys.argv[1]) as fd:
 try:
 	program = parser.parse(data)
 	program.execute()
-except SyntaxError:
+except TypeError:
 	print('syntax error')

@@ -21,11 +21,11 @@ precedence = (
 )
 
 def p_program(p):
-	'''program : MAIN block'''
+	'''program : MAIN block END'''
 	p[0] = ast.ProgramNode(block = p[2])
 
 def p_block(p):
-	'''block : statement_list END'''
+	'''block : statement_list'''
 	p[0] = ast.BlockNode(sl = p[1])
 
 def p_statement_list(p):
@@ -43,6 +43,14 @@ def p_statement(p):
 		p[0] = ast.AssignmentNode(var = p[1], value = p[3])
 	elif len(p) == 5:
 		p[0] = ast.PrintNode(p[3])
+
+def p_if(p):
+	'''statement : IF expression THEN block END'''
+	p[0] = ast.IfNode(expression = p[2], block1 = p[4])
+
+def p_if_else(p):
+	'''statement : IF expression THEN block ELSE block END'''
+	p[0] = ast.IfNode(expression = p[2], block1 = p[4], block2 = p[6])
 
 def p_expression(p):
 	'''expression : LPAREN expression RPAREN

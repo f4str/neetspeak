@@ -26,7 +26,9 @@ import ast
 
 keywords = (
 	'AND', 'OR', 'XOR', 'NOT', 
-	'END', 'PRINT', 'MAIN'
+	'END', 'PRINT', 'MAIN',
+	'IF', 'THEN', 'ELSE', 
+	'WHILE', 'FOR', 'FOREACH'
 )
 
 tokens = keywords + (
@@ -38,19 +40,21 @@ tokens = keywords + (
 )
 
 reserved = {
-	'if': 'IF',
-	'else': 'ELSE',
-	'while': 'WHILE',
-	'in': 'IN',
-	'end': 'END',
-	'print': 'PRINT',
-	'main': 'MAIN',
 	'not': 'NOT',
 	'and': 'AND',
 	'ore': 'OR',
 	'xor': 'XOR',
 	'true': 'TRUE',
 	'false': 'FALSE', 
+	'print': 'PRINT',
+	'main': 'MAIN',
+	'end': 'END',
+	'if': 'IF',
+	'then': 'THEN',
+	'else': 'ELSE',
+	'while': 'WHILE',
+	'for': 'FOR',
+	'foreach': 'FOREACH'
 }
 
 t_LPAREN = r'\('
@@ -80,6 +84,12 @@ t_XOR = r'xor'
 t_END = r'end'
 t_PRINT = r'print'
 t_MAIN = r'main'
+t_IF = r'if'
+t_THEN = r'then'
+t_ELSE = r'else'
+t_WHILE = r'while'
+t_FOR = r'for'
+t_FOREACH = r'foreach'
 
 def t_REAL(t):
 	r'\d*(\d\.|\.\d)\d*([eE][-+]?\d+)?'
