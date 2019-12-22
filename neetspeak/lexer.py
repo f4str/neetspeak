@@ -1,33 +1,10 @@
 from ply import lex
 import ast
 
-# keywords = (
-#     'INT', 'REAL', 'BOOL', 'CHAR', 'VOID', 'STRING', 'OBJECT',
-#     'LIST', 'MAP', 'SET',
-#     'TRUE', 'FALSE', 'IN',
-#     'IF', 'ELSE', 'WHILE', 'FOR', 'DO', 'RETURN',
-#     'PRINT'
-# )
-
-# tokens = keywords + (
-#     'LBRACKET', 'RBRACKET',
-#     'COMMA', 'COLON',
-#     'ASSIGN',
-#     'ID'
-# )
-
-# t_COLON = r':'
-# t_IN = r'in'
-# t_IF = r'if'
-# t_ELSE = r'else'
-# t_WHILE = r'while'
-# t_FOR = r'for'
-# t_DO = r'do'
-
 keywords = (
 	'AND', 'OR', 'XOR', 'NOT', 
 	'END', 'PRINT', 'MAIN',
-	'IF', 'THEN', 'ELSE', 
+	'IF', 'THEN', 'ELSE', 'ELSEIF',
 	'WHILE', 'FOR', 'FOREACH'
 )
 
@@ -52,6 +29,7 @@ reserved = {
 	'if': 'IF',
 	'then': 'THEN',
 	'else': 'ELSE',
+	'elseif': 'ELSEIF',
 	'while': 'WHILE',
 	'for': 'FOR',
 	'foreach': 'FOREACH'
@@ -87,6 +65,7 @@ t_MAIN = r'main'
 t_IF = r'if'
 t_THEN = r'then'
 t_ELSE = r'else'
+t_ELSEIF = r'elseif'
 t_WHILE = r'while'
 t_FOR = r'for'
 t_FOREACH = r'foreach'

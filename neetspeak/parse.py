@@ -38,19 +38,32 @@ def p_statement_list(p):
 
 def p_statement(p):
 	'''statement : PRINT LPAREN expression RPAREN
-				  | expression ASSIGN expression'''
-	if len(p) == 4:
+				 | expression ASSIGN expression
+				 | if_else END'''
+	if len(p) == 3:
+		p[0] = p[1]
+	elif len(p) == 4:
 		p[0] = ast.AssignmentNode(var = p[1], value = p[3])
 	elif len(p) == 5:
 		p[0] = ast.PrintNode(p[3])
 
-def p_if(p):
-	'''statement : IF expression THEN block END'''
-	p[0] = ast.IfNode(expression = p[2], block1 = p[4])
-
 def p_if_else(p):
-	'''statement : IF expression THEN block ELSE block END'''
-	p[0] = ast.IfNode(expression = p[2], block1 = p[4], block2 = p[6])
+	'''if_else : IF expression THEN block
+			   | IF expression THEN block ELSE block
+			   | IF expression THEN block ELSEIF else_if'''
+	if len(p) == 5:
+		p[0] = ast.IfNode(expression = p[2], block1 = p[4])
+	elif len(p) == 7:
+		p[0] = ast.IfNode(expression = p[2], block1 = p[4], block2 = p[6])
+
+def p_else_if(p):
+	'''else_if : expression THEN block
+			   | expression THEN block ELSE block
+			   | expression THEN block ELSEIF else_if'''
+	if len(p) == 4:
+		p[0] = ast.IfNode(expression = p[1], block1 = p[3])
+	elif len(p) == 6:
+		p[0] = ast.IfNode(expression = p[1], block1 = p[3], block2 = p[5])
 
 def p_expression(p):
 	'''expression : LPAREN expression RPAREN
@@ -116,7 +129,7 @@ def p_list_in(p):
 		p[0] = p[1] + [p[3]]
 
 def p_error(p):
-	print(f'syntax error at {p.value}')
+	print(f'syntax error at {p}')
 	raise SyntaxError
 
 
