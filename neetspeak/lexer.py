@@ -5,7 +5,7 @@ keywords = (
 	'AND', 'OR', 'XOR', 'NOT', 
 	'END', 'PRINT', 'MAIN',
 	'IF', 'THEN', 'ELSE', 'ELSEIF',
-	'WHILE', 'FOR', 'FOREACH'
+	'WHILE', 'DO', 'FOR', 'FOREACH'
 )
 
 tokens = keywords + (
@@ -31,6 +31,7 @@ reserved = {
 	'else': 'ELSE',
 	'elseif': 'ELSEIF',
 	'while': 'WHILE',
+	'do': 'DO',
 	'for': 'FOR',
 	'foreach': 'FOREACH'
 }
@@ -67,6 +68,7 @@ t_THEN = r'then'
 t_ELSE = r'else'
 t_ELSEIF = r'elseif'
 t_WHILE = r'while'
+t_DO = r'do'
 t_FOR = r'for'
 t_FOREACH = r'foreach'
 

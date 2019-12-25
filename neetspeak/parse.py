@@ -39,7 +39,8 @@ def p_statement_list(p):
 def p_statement(p):
 	'''statement : PRINT LPAREN expression RPAREN
 				 | expression ASSIGN expression
-				 | if_else END'''
+				 | if_else END
+				 | while END'''
 	if len(p) == 3:
 		p[0] = p[1]
 	elif len(p) == 4:
@@ -50,20 +51,24 @@ def p_statement(p):
 def p_if_else(p):
 	'''if_else : IF expression THEN block
 			   | IF expression THEN block ELSE block
-			   | IF expression THEN block ELSEIF else_if'''
+			   | IF expression THEN block ELSEIF elseif'''
 	if len(p) == 5:
-		p[0] = ast.IfNode(expression = p[2], block1 = p[4])
+		p[0] = ast.IfNode(expression = p[2], if_block = p[4])
 	elif len(p) == 7:
-		p[0] = ast.IfNode(expression = p[2], block1 = p[4], block2 = p[6])
+		p[0] = ast.IfNode(expression = p[2], if_block = p[4], else_block = p[6])
 
 def p_else_if(p):
-	'''else_if : expression THEN block
-			   | expression THEN block ELSE block
-			   | expression THEN block ELSEIF else_if'''
+	'''elseif : expression THEN block
+			  | expression THEN block ELSE block
+			  | expression THEN block ELSEIF elseif'''
 	if len(p) == 4:
-		p[0] = ast.IfNode(expression = p[1], block1 = p[3])
+		p[0] = ast.IfNode(expression = p[1], if_block = p[3])
 	elif len(p) == 6:
-		p[0] = ast.IfNode(expression = p[1], block1 = p[3], block2 = p[5])
+		p[0] = ast.IfNode(expression = p[1], if_block = p[3], else_block = p[5])
+
+def p_while(p):
+	'''while : WHILE expression DO block'''
+	p[0] = ast.WhileNode(expression = p[2], block = p[4])
 
 def p_expression(p):
 	'''expression : LPAREN expression RPAREN

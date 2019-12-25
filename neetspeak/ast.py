@@ -174,18 +174,28 @@ class AssignmentNode(Node):
 		self.var = var
 		self.value = value
 	
-	def evaluate(self):
+	def execute(self):
 		stack[-1][self.var.value] = self.value.evaluate()
 
 
 class IfNode(Node):
-	def __init__(self, expression, block1, block2 = None):
+	def __init__(self, expression, if_block, else_block = None):
 		self.expression = expression
-		self.block1 = block1
-		self.block2 = block2
+		self.if_block = if_block
+		self.else_block = else_block
 	
-	def evaluate(self):
+	def execute(self):
 		if self.expression.evaluate().value:
-			self.block1.execute()
-		elif self.block2:
-			self.block2.execute()
+			self.if_block.execute()
+		elif self.else_block:
+			self.else_block.execute()
+
+
+class WhileNode(Node):
+	def __init__(self, expression, block):
+		self.expression = expression
+		self.block = block
+	
+	def execute(self):
+		while self.expression.evaluate().value:
+			self.block.execute()
