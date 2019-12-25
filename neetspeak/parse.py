@@ -40,7 +40,8 @@ def p_statement(p):
 	'''statement : PRINT LPAREN expression RPAREN
 				 | expression ASSIGN expression
 				 | if_else END
-				 | while END'''
+				 | while END
+				 | for END'''
 	if len(p) == 3:
 		p[0] = p[1]
 	elif len(p) == 4:
@@ -69,6 +70,11 @@ def p_else_if(p):
 def p_while(p):
 	'''while : WHILE expression DO block'''
 	p[0] = ast.WhileNode(expression = p[2], block = p[4])
+
+def p_for(p):
+	'''for : FOR expression ASSIGN expression TO expression DO block
+		   | FOR expression ASSIGN expression DOWNTO expression DO block'''
+	p[0] = ast.ForNode(var = p[2], start = p[4], direction = p[5], end = p[6], block = p[8])
 
 def p_expression(p):
 	'''expression : LPAREN expression RPAREN

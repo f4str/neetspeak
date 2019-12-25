@@ -135,7 +135,7 @@ class BinaryOperationNode(Node):
 
 
 class BlockNode(Node):
-	def __init__(self, sl = None):
+	def __init__(self, sl = []):
 		self.sl = sl
 	
 	def execute(self):
@@ -163,7 +163,7 @@ class VariableNode(Node):
 		if self.value in stack[-1]:
 			return stack[-1][self.value]
 		else:
-			for variables in stack:
+			for variables in stack[::-1]:
 				if self.value in variables:
 					return variables[self.value]
 		raise KeyError
@@ -199,3 +199,26 @@ class WhileNode(Node):
 	def execute(self):
 		while self.expression.evaluate().value:
 			self.block.execute()
+
+class ForNode(Node):
+	def __init__(self, var, start, direction, end, block):
+		self.var = var
+		self.start = start
+		self.direction = direction
+		self.end = end
+		self.block = block
+	
+	def execute(self):
+		start = self.start.evaluate().value
+		end = self.end.evaluate().value
+		
+		if self.direction == 'to':
+			for x in range(start, end + 1):
+				AssignmentNode(self.var, IntNode(x)).execute()
+				self.block.execute()
+		elif self.direction == 'downto':
+			for x in range(start, end - 1, -1):
+				AssignmentNode(self.var, IntNode(x)).execute()
+				self.block.execute()
+		else:
+			raise SyntaxError

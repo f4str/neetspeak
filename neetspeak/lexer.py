@@ -5,7 +5,9 @@ keywords = (
 	'AND', 'OR', 'XOR', 'NOT', 
 	'END', 'PRINT', 'MAIN',
 	'IF', 'THEN', 'ELSE', 'ELSEIF',
-	'WHILE', 'DO', 'FOR', 'FOREACH'
+	'WHILE', 'DO', 
+	'FOR', 'TO', 'DOWNTO', 
+	'FOREACH'
 )
 
 tokens = keywords + (
@@ -33,6 +35,8 @@ reserved = {
 	'while': 'WHILE',
 	'do': 'DO',
 	'for': 'FOR',
+	'to': 'TO',
+	'downto': 'DOWNTO',
 	'foreach': 'FOREACH'
 }
 
@@ -70,6 +74,8 @@ t_ELSEIF = r'elseif'
 t_WHILE = r'while'
 t_DO = r'do'
 t_FOR = r'for'
+t_TO = r'to'
+t_DOWNTO = r'downto'
 t_FOREACH = r'foreach'
 
 def t_REAL(t):
