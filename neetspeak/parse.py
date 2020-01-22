@@ -10,9 +10,12 @@ precedence = (
 	('left', 'AND'),
 	('left', 'NOT'),
 	('left', 'EQ', 'LT', 'GT', 'LE', 'GE', 'NE'),
+	('left', 'BITOR'),
+	('left', 'BITXOR'),
+	('left', 'BITAND'),
 	('left', 'PLUS', 'MINUS'),
 	('left', 'TIMES', 'DIV', 'MOD'), 
-	('nonassoc', 'UMINUS', 'UPLUS'),
+	('nonassoc', 'UMINUS', 'UPLUS', 'UINVERT'),
 	('right', 'POW'), 
 	('left', 'INDEX'),
 	('left', 'LBRACKET'),
@@ -95,7 +98,8 @@ def p_variable(p):
 def p_unary_operation(p):
 	'''expression : MINUS expression %prec UMINUS
 				  | PLUS expression %prec UPLUS
-				  | NOT expression %prec NOT'''
+				  | NOT expression %prec NOT
+				  | INVERT expression &prec UINVERT'''
 	p[0] = ast.UnaryOperationNode(op = p[1], value = p[2])
 
 def p_binary_operation(p):
@@ -113,7 +117,12 @@ def p_binary_operation(p):
 				  | expression GE expression
 				  | expression AND expression
 				  | expression OR expression
-				  | expression XOR expression'''
+				  | expression XOR expression
+				  | expression BITOR expression
+				  | expression BITAND expression
+				  | expression BITXOR expression
+				  | expression LSHIFT expression
+				  | expression RSHIFT expression'''
 	p[0] = ast.BinaryOperationNode(op = p[2], v1 = p[1], v2 = p[3])
 
 def p_index(p):

@@ -8,55 +8,73 @@ class Object:
 	def __str__(self):
 		return self.value.__str__()
 	
-	def add_op(self, other):
+	def __add__(self, other):
 		raise SyntaxError
 	
-	def sub_op(self, other):
+	def __sub__(self, other):
 		raise SyntaxError
 	
-	def mul_op(self, other):
+	def __mul__(self, other):
 		raise SyntaxError
 	
-	def div_op(self, other):
+	def __truediv__(self, other):
 		raise SyntaxError
 	
-	def mod_op(self, other):
+	def __mod__(self, other):
 		raise SyntaxError
 	
-	def pow_op(self, other):
+	def __pow__(self, other):
 		raise SyntaxError
 	
-	def lt_op(self, other):
+	def __lt__(self, other):
 		raise SyntaxError
 	
-	def gt_op(self, other):
+	def __gt__(self, other):
 		raise SyntaxError
 	
-	def le_op(self, other):
+	def __le__(self, other):
 		raise SyntaxError
 	
-	def ge_op(self, other):
+	def __ge__(self, other):
 		raise SyntaxError
 	
-	def eq_op(self, other):
+	def __eq__(self, other):
 		raise SyntaxError
 	
-	def ne_op(self, other):
+	def __ne__(self, other):
 		raise SyntaxError
 	
-	def and_op(self, other):
+	def __and2__(self, other):
 		raise SyntaxError
 	
-	def or_op(self, other):
+	def __or2__(self, other):
 		raise SyntaxError
 	
-	def not_op(self):
+	def __not__(self):
 		raise SyntaxError
 	
-	def neg_op(self):
+	def __neg__(self):
 		raise SyntaxError
 	
-	def pos_op(self):
+	def __pos__(self):
+		raise SyntaxError
+	
+	def __or__(self, other):
+		raise SyntaxError
+	
+	def __and__(self, other):
+		raise SyntaxError
+	
+	def __xor__(self, other):
+		raise SyntaxError
+	
+	def __lshift__(self, other):
+		raise SyntaxError
+	
+	def __rshift__(self, other):
+		raise SyntaxError
+	
+	def __invert__(self):
 		raise SyntaxError
 
 
@@ -67,28 +85,28 @@ class Bool(Object):
 	def __str__(self):
 		return 'true' if self.value else 'false'
 	
-	def and_op(self, other):
+	def __and2__(self, other):
 		if isinstance(other, Bool):
 			return Bool(self.value and other.value)
 		else:
 			raise SyntaxError
 	
-	def or_op(self, other):
+	def __or2__(self, other):
 		if isinstance(other, Bool):
 			return Bool(self.value or other.value)
 		else:
 			raise SyntaxError
 	
-	def not_op(self):
+	def __not__(self):
 		return Bool(not self.value)
 	
-	def eq_op(self, other):
+	def __eq__(self, other):
 		if isinstance(other, Bool):
 			return Bool(self.value == other.value)
 		else: 
 			raise SyntaxError
 	
-	def ne_op(self, other):
+	def __ne__(self, other):
 		if isinstance(other, Bool):
 			return Bool(self.value != other.value)
 		else:
@@ -99,7 +117,7 @@ class Int(Object):
 	def __init__(self, value):
 		self.value = int(value)
 	
-	def add_op(self, other):
+	def __add__(self, other):
 		if isinstance(other, Int):
 			return Int(self.value + other.value)
 		elif isinstance(other, Real):
@@ -107,7 +125,7 @@ class Int(Object):
 		else:
 			raise SyntaxError
 	
-	def sub_op(self, other):
+	def __sub__(self, other):
 		if isinstance(other, Int):
 			return Int(self.value - other.value)
 		elif isinstance(other, Real):
@@ -115,7 +133,7 @@ class Int(Object):
 		else:
 			raise SyntaxError
 	
-	def mul_op(self, other):
+	def __mul__(self, other):
 		if isinstance(other, Int):
 			return Int(self.value * other.value)
 		elif isinstance(other, Real):
@@ -123,7 +141,7 @@ class Int(Object):
 		else:
 			raise SyntaxError
 	
-	def div_op(self, other):
+	def __truediv__(self, other):
 		if isinstance(other, Int):
 			return Int(self.value // other.value)
 		elif isinstance(other, Real):
@@ -131,7 +149,7 @@ class Int(Object):
 		else:
 			raise SyntaxError
 	
-	def mod_op(self, other):
+	def __mod__(self, other):
 		if isinstance(other, Int):
 			return Int(self.value % other.value)
 		elif isinstance(other, Real):
@@ -139,7 +157,7 @@ class Int(Object):
 		else:
 			raise SyntaxError
 	
-	def pow_op(self, other):
+	def __pow__(self, other):
 		if isinstance(other, Int):
 			return Int(self.value ** other.value)
 		elif isinstance(other, Real):
@@ -147,129 +165,162 @@ class Int(Object):
 		else:
 			raise SyntaxError
 	
-	def lt_op(self, other):
+	def __lt__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value < other.value)
 		else:
 			raise SyntaxError
 	
-	def gt_op(self, other):
+	def __gt__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value > other.value)
 		else:
 			raise SyntaxError
 	
-	def le_op(self, other):
+	def __le__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value <= other.value)
 		else:
 			raise SyntaxError
 	
-	def ge_op(self, other):
+	def __ge__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value >= other.value)
 		else:
 			raise SyntaxError
 	
-	def eq_op(self, other):
+	def __eq__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value == other.value)
 		else:
 			raise SyntaxError
 	
-	def ne_op(self, other):
+	def __ne__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value != other.value)
 		else:
 			raise SyntaxError
 	
-	def neg_op(self):
+	def __neg__(self):
 		return Int(-self.value)
 	
-	def pos_op(self):
+	def __pos__(self):
 		return Int(+self.value)
+	
+	def __or__(self, other):
+		if isinstance(other, Int):
+			return Int(self.value | other.value)
+		else:
+			raise SyntaxError
+	
+	def __and__(self, other):
+		if isinstance(other, Int):
+			return Int(self.value & other.value)
+		else:
+			raise SyntaxError
+	
+	def __xor__(self, other):
+		if isinstance(other, Int):
+			return Int(self.value ^ other.value)
+		else:
+			raise SyntaxError
+	
+	def __lshift__(self, other):
+		if isinstance(other, Int):
+			return Int(self.value << other.value)
+		else:
+			raise SyntaxError
+	
+	def __rshift__(self, other):
+		if isinstance(other, Int):
+			return Int(self.value >> other.value)
+		else:
+			raise SyntaxError
+	
+	def __invert__(self):
+		return Int(~self.value)
 
 
 class Real(Object):
 	def __init__(self, value):
 		self.value = float(value)
 	
-	def add_op(self, other):
+	def __add__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Real(self.value + other.value)
 		else:
 			raise SyntaxError
 	
-	def sub_op(self, other):
+	def __sub__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Real(self.value - other.value)
 		else:
 			raise SyntaxError
 	
-	def mul_op(self, other):
+	def __mul__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Real(self.value * other.value)
 		else:
 			raise SyntaxError
 	
-	def div_op(self, other):
+	def __truediv__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Real(self.value / other.value)
 		else:
 			raise SyntaxError
 	
-	def mod_op(self, other):
+	def __mod__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Real(self.value % other.value)
 		else:
 			raise SyntaxError
 	
-	def pow_op(self, other):
+	def __pow__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Real(self.value ** other.value)
 		else:
 			raise SyntaxError
 	
-	def lt_op(self, other):
+	def __lt__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value < other.value)
 		else:
 			raise SyntaxError
 	
-	def gt_op(self, other):
+	def __gt__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value > other.value)
 		else:
 			raise SyntaxError
 	
-	def le_op(self, other):
+	def __le__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value <= other.value)
 		else:
 			raise SyntaxError
 	
-	def ge_op(self, other):
+	def __ge__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value >= other.value)
 		else:
 			raise SyntaxError
 	
-	def eq_op(self, other):
+	def __eq__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value == other.value)
 		else:
 			raise SyntaxError
 	
-	def ne_op(self, other):
+	def __ne__(self, other):
 		if isinstance(other, (Int, Real)):
 			return Bool(self.value != other.value)
 		else:
 			raise SyntaxError
 	
-	def neg_op(self):
+	def __neg__(self):
 		return Real(-self.value)
 	
-	def pos_op(self):
+	def __pos__(self):
 		return Real(+self.value)
 
 	
@@ -280,7 +331,7 @@ class String(Object):
 	def __str__(self):
 		return '"' + self.value + '"'
 	
-	def add_op(self, other):
+	def __add__(self, other):
 		if isinstance(other, String):
 			return String(self.value + other.value)
 		elif isinstance(other, (Int, Real)):
@@ -288,43 +339,43 @@ class String(Object):
 		else:
 			raise SyntaxError
 	
-	def mul_op(self, other):
+	def __mul__(self, other):
 		if isinstance(other, Int):
 			return String(self.value * other.value)
 		else:
 			raise SyntaxError
 	
-	def lt_op(self, other):
+	def __lt__(self, other):
 		if isinstance(other, String):
 			return Bool(self.value < other.value)
 		else:
 			raise SyntaxError
 	
-	def gt_op(self, other):
+	def __gt__(self, other):
 		if isinstance(other, String):
 			return Bool(self.value > other.value)
 		else:
 			raise SyntaxError
 	
-	def le_op(self, other):
+	def __le__(self, other):
 		if isinstance(other, String):
 			return Bool(self.value <= other.value)
 		else:
 			raise SyntaxError
 	
-	def ge_op(self, other):
+	def __ge__(self, other):
 		if isinstance(other, String):
 			return Bool(self.value >= other.value)
 		else:
 			raise SyntaxError
 	
-	def eq_op(self, other):
+	def __eq__(self, other):
 		if isinstance(other, String):
 			return Bool(self.value == other.value)
 		else:
 			raise SyntaxError
 	
-	def ne_op(self, other):
+	def __ne__(self, other):
 		if isinstance(other, String):
 			return Bool(self.value != other.value)
 		else:
@@ -356,49 +407,49 @@ class List(Object):
 	def __setitem__(self, key, value):
 		self.value[key] = value
 	
-	def add_op(self, other):
+	def __add__(self, other):
 		if isinstance(other, List):
 			return List(self.value + other.value)
 		else:
 			raise SyntaxError
 	
-	def mul_op(self, other):
+	def __mul__(self, other):
 		if isinstance(other, Int):
 			return List(self.value * other.value)
 		else:
 			raise SyntaxError
 	
-	def lt_op(self, other):
+	def __lt__(self, other):
 		if isinstance(other, List):
 			return Bool(self.value < other.value)
 		else:
 			raise SyntaxError
 	
-	def gt_op(self, other):
+	def __gt__(self, other):
 		if isinstance(other, List):
 			return Bool(self.value > other.value)
 		else:
 			raise SyntaxError
 	
-	def le_op(self, other):
+	def __le__(self, other):
 		if isinstance(other, List):
 			return Bool(self.value <= other.value)
 		else:
 			raise SyntaxError
 	
-	def ge_op(self, other):
+	def __ge__(self, other):
 		if isinstance(other, List):
 			return Bool(self.value >= other.value)
 		else:
 			raise SyntaxError
 	
-	def eq_op(self, other):
+	def __eq__(self, other):
 		if isinstance(other, List):
 			return Bool(self.value == other.value)
 		else:
 			raise SyntaxError
 	
-	def ne_op(self, other):
+	def __ne__(self, other):
 		if isinstance(other, List):
 			return Bool(self.value != other.value)
 		else:

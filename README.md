@@ -6,7 +6,7 @@ Although the syntax is based off pseudocode, it is very similar to Ruby with the
 
 ## Requirements
 
-* Python 3.7+
+* Python 3
 * PLY
 
 On Ubuntu, all dependencies can be installed using apt and pip:
@@ -26,7 +26,7 @@ $ python3 interpreter.py test.neet
 
 Context of `test.neet`:
 ```ruby
-main()
+algorithm main()
     print('hello there')
 end
 ```
@@ -106,6 +106,17 @@ A simple print statement found in Python. Prints any data type, but only takes a
 
 ```ruby
 print('1 + 2 equals ' + (1 + 2))
+```
+
+### Comments
+
+Comments are C-style and will be ignored when running the program. The start with the `/*` keyword and end with the `*/` keyword. Since Neetspeak ignores whitespace, the multiline comment is necessary. 
+
+```c#
+/* this will be ignored */
+print("hello there")
+x := 5 /* good for documentation */
+print(x + 1) /* 6 */
 ```
 
 ### Main function

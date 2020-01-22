@@ -77,6 +77,12 @@ t_FOR = r'for'
 t_TO = r'to'
 t_DOWNTO = r'downto'
 t_FOREACH = r'foreach'
+t_BITOR = r'\|'
+t_BITAND = r'&'
+t_BITXOR = r'^'
+t_LSHIFT = r'<<'
+t_RSHIFT = r'>>'
+t_INVERT = r'~'
 
 def t_REAL(t):
 	r'\d*(\d\.|\.\d)\d*([eE][-+]?\d+)?'

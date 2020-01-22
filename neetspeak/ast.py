@@ -84,11 +84,13 @@ class UnaryOperationNode(Node):
 	def evaluate(self):
 		val = self.value.evaluate()
 		if self.op == 'not':
-			return val.not_op()
+			return val.__not__()
 		elif self.op == '-':
-			return val.neg_op()
+			return -val
 		elif self.op == '+':
-			return val.pos_op()
+			return +val
+		elif self.op == '~':
+			return ~val
 		else:
 			raise SyntaxError
 
@@ -103,33 +105,43 @@ class BinaryOperationNode(Node):
 		val1 = self.v1.evaluate()
 		val2 = self.v2.evaluate()
 		if self.op == '+':
-			return val1.add_op(val2)
+			return val1 + val2
 		elif self.op == '-':
-			return val1.sub_op(val2)
+			return val1 - val2
 		elif self.op == '*':
-			return val1.mul_op(val2)
+			return val1 * val2
 		elif self.op == '/':
-			return val1.div_op(val2)
+			return val1 / val2
 		elif self.op == '%':
-			return val1.mod_op(val2)
+			return val1 % val2
 		elif self.op == '**':
-			return val1.pow_op(val2)
+			return val1 ** val2
 		elif self.op == 'and':
-			return val1.and_op(val2)
+			return val1.__and2__(val2)
 		elif self.op == 'or':
-			return val1.or_op(val2)
+			return val1.__or2__(val2)
 		elif self.op in {'xor', '!='}:
-			return val1.ne_op(val2)
+			return val1 != val2
 		elif self.op == '=':
-			return val1.eq_op(val2)
+			return val1 == val2
 		elif self.op == '<':
-			return val1.lt_op(val2)
+			return val1 < val2
 		elif self.op == '>':
-			return val1.gt_op(val2)
+			return val1 > val2
 		elif self.op == '<=':
-			return val1.le_op(val2)
+			return val1 <= val2
 		elif self.op == '>=':
-			return val1.ge_op(val2)
+			return val1 >= val2
+		elif self.op == '|':
+			return val1 | val2
+		elif self.op == '&':
+			return val1 & val2
+		elif self.op == '^':
+			return val1 ^ val2
+		elif self.op == '<<':
+			return val1 << val2
+		elif self.op == '>>':
+			return val1 >> val2
 		else:
 			raise SyntaxError
 
